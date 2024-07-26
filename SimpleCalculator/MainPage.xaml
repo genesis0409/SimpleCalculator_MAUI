@@ -1,0 +1,303 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SimpleCalculator.MainPage"
+             Padding="{OnPlatform iOS='0,20,0,0'}"
+             >
+
+    <Grid
+        Padding="5,0"
+        ColumnSpacing="1"
+        BackgroundColor="#212121"
+        RowSpacing="1">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2.5*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--계산식(누적)-->
+        <Label
+            x:Name="CalcText"
+            Grid.ColumnSpan="4"
+            BackgroundColor="#101010"
+            FontAttributes="Bold"
+            FontSize="38"
+            HorizontalTextAlignment="End"
+            LineBreakMode="NoWrap"
+            Text="0"
+            TextColor="White"
+            VerticalTextAlignment="Center"
+            />
+        
+        <!--결과 출력-->
+        <Label
+            x:Name="result"
+            Grid.Row="1"
+            Grid.Column="1"
+            Grid.ColumnSpan="3"
+            BackgroundColor="#101010"
+            FontAttributes="Bold"
+            FontSize="48"
+            HorizontalTextAlignment="End"
+            LineBreakMode="NoWrap"
+            Text="0"
+            TextColor="Orange"
+            VerticalTextAlignment="Center"
+            />
+
+        <!--Button: Equal-->
+        <Button
+            Grid.Row="1"
+            BackgroundColor="#212121"
+            Clicked="OnCalculate"
+            CornerRadius="0"
+            FontSize="50"
+            Text="="
+            TextColor="White"
+            />
+
+        <!--Button: Clear-->
+        <Button
+            Grid.Row="2"
+            BackgroundColor="#313131"
+            Clicked="OnClear"
+            CornerRadius="0"
+            FontSize="40"
+            Text="C"
+            TextColor="White"
+            />
+
+        <!--Button: Square-->
+        <Button
+            Grid.Row="2"
+            Grid.Column="1"
+            BackgroundColor="#212121"
+            Clicked="OnSquareRoot"
+            CornerRadius="0"
+            FontSize="40"
+            Text="^2%"
+            TextColor="White"
+            />
+
+        <!--Button: Percentage-->
+        <Button
+            Grid.Row="2"
+            Grid.Column="2"
+            BackgroundColor="#212121"
+            Clicked="OnPercentage"
+            CornerRadius="0"
+            FontSize="40"
+            Text="%"
+            TextColor="White"
+            />
+
+        <!--Button: 7-->
+        <Button
+            Grid.Row="3"
+            Grid.Column="0"
+            BackgroundColor="#212121"
+            Clicked="OnNumberSelection"
+            CornerRadius="0"
+            FontSize="40"
+            Text="7"
+            TextColor="White"
+            />
+
+        <!--Button: 8-->
+        <Button
+            Grid.Row="3"
+            Grid.Column="1"
+            BackgroundColor="#212121"
+            Clicked="OnNumberSelection"
+            CornerRadius="0"
+            FontSize="40"
+            Text="8"
+            TextColor="White"
+            />
+
+        <!--Button: 9-->
+        <Button
+            Grid.Row="3"
+            Grid.Column="2"
+            BackgroundColor="#212121"
+            Clicked="OnNumberSelection"
+            CornerRadius="0"
+            FontSize="40"
+            Text="9"
+            TextColor="White"
+            />
+        
+        <!--Button: 4-->
+        <Button
+            Grid.Row="4"
+            Grid.Column="0"
+            BackgroundColor="#212121"
+            Clicked="OnNumberSelection"
+            CornerRadius="0"
+            FontSize="40"
+            Text="4"
+            TextColor="White"
+            />
+        
+        <!--Button: 5-->
+        <Button
+            Grid.Row="4"
+            Grid.Column="1"
+            BackgroundColor="#212121"
+            Clicked="OnNumberSelection"
+            CornerRadius="0"
+            FontSize="40"
+            Text="5"
+            TextColor="White"
+            />
+        
+        <!--Button: 6-->
+        <Button
+            Grid.Row="4"
+            Grid.Column="2"
+            BackgroundColor="#212121"
+            Clicked="OnNumberSelection"
+            CornerRadius="0"
+            FontSize="40"
+            Text="6"
+            TextColor="White"
+            />
+        
+        <!--Button: 1-->
+        <Button
+            Grid.Row="5"
+            Grid.Column="0"
+            BackgroundColor="#212121"
+            Clicked="OnNumberSelection"
+            CornerRadius="0"
+            FontSize="40"
+            Text="1"
+            TextColor="White"
+            />
+        
+        <!--Button: 2-->
+        <Button
+            Grid.Row="5"
+            Grid.Column="1"
+            BackgroundColor="#212121"
+            Clicked="OnNumberSelection"
+            CornerRadius="0"
+            FontSize="40"
+            Text="2"
+            TextColor="White"
+            />
+        
+        <!--Button: 3-->
+        <Button
+            Grid.Row="5"
+            Grid.Column="2"
+            BackgroundColor="#212121"
+            Clicked="OnNumberSelection"
+            CornerRadius="0"
+            FontSize="40"
+            Text="3"
+            TextColor="White"
+            />
+
+        <!--Button: 0; ColumnSpan은 병합영역-->
+        <Button
+            Grid.Row="6"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            BackgroundColor="#212121"
+            Clicked="OnNumberSelection"
+            CornerRadius="0"
+            FontSize="40"
+            Text="0"
+            TextColor="White"
+            />
+
+        <!--Button: Dot-->
+        <Button
+            Grid.Row="6"
+            Grid.Column="2"
+            BackgroundColor="#212121"
+            Clicked="OnNumberSelection"
+            CornerRadius="0"
+            FontSize="50"
+            Text="."
+            TextColor="White"
+            />
+
+        <!--Button: Backspace-->
+        <Button
+            Grid.Row="2"
+            Grid.Column="3"
+            BackgroundColor="#1156b1"
+            Clicked="OnDeleteLastChar"
+            CornerRadius="0"
+            FontSize="50"
+            Text="←"
+            TextColor="White"
+            />
+
+        <!--Button: Divide-->
+        <Button
+            Grid.Row="3"
+            Grid.Column="3"
+            BackgroundColor="#0d47a1"
+            Clicked="OnOperatorSelection"
+            CornerRadius="0"
+            FontSize="50"
+            Text="/"
+            TextColor="White"
+            />
+
+        <!--Button: Multiply-->
+        <Button
+            Grid.Row="4"
+            Grid.Column="3"
+            BackgroundColor="#0d47a1"
+            Clicked="OnOperatorSelection"
+            CornerRadius="0"
+            FontSize="50"
+            Text="x"
+            TextColor="White"
+            />
+
+        <!--Button: Minus-->
+        <Button
+            Grid.Row="5"
+            Grid.Column="3"
+            BackgroundColor="#0d47a1"
+            Clicked="OnOperatorSelection"
+            CornerRadius="0"
+            FontSize="50"
+            Text="-"
+            TextColor="White"
+            />
+
+        <!--Button: Plus-->
+        <Button
+            Grid.Row="6"
+            Grid.Column="3"
+            BackgroundColor="#0d47a1"
+            Clicked="OnOperatorSelection"
+            CornerRadius="0"
+            FontSize="50"
+            Text="+"
+            TextColor="White"
+            />
+
+
+    </Grid>
+
+</ContentPage>
