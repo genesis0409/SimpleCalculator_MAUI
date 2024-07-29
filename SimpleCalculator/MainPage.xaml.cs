@@ -41,32 +41,22 @@ namespace SimpleCalculator
 
         void OnNumberSelection(object sender, EventArgs e)
         {
-            //Button button = sender as Button; // 안전한 캐스팅; as 키워드
-                                                // sender 객체가 Button 타입이 아닌 경우 예외 발생 대신 null 반환
-                                                // 따라서 반환된 객체가 null인지 확인하는 추가 코드가 필요
-            Button button = (Button)sender; // 명시적 캐스팅
-                                            // sender 객체가 Button 타입이 아닌 경우 InvalidCastException 예외 발생
-                                            // 타입이 확실할 때 사용
+            //Button button = sender as Button; // 안전한 캐스팅; as 키워드; sender 객체가 Button 타입이 아닌 경우 예외 발생 대신 null 반환; 따라서 반환된 객체가 null인지 확인하는 추가 코드가 필요
+            Button button = (Button)sender;     // 명시적 캐스팅; sender 객체가 Button 타입이 아닌 경우 InvalidCastException 예외 발생; 타입이 확실할 때 사용
             string btnPressed = button.Text;    // 버튼을 누르면 해당 숫자 사용
 
-            if (isFirstInput)
+            if (this.result.Text == "0" || currentState < 0)    // clear상태에서 입력 시 (결과 0상태) 혹은 음수 상태일 때 (-2: secondNum 입력순서) 텍스트 비우고 입력
             {
-
-                isFirstInput = false;
-            }
-
-            if (this.result.Text == "0" || currentState < 0) // 첫 입력 시 (결과 0상태) 혹은 음수 상태일 때 (-2: secondNum 입력순서) 텍스트 비우고 입력
-            {
-                if (this.result.Text == "0")    // 초기 입력 시에만 계산식 초기화
+                
+                if (this.result.Text == "0" && isFirstInput)    // clear상태에서 입력 시에만 계산식 초기화
                 {
                     this.CalcText.Text = string.Empty;
                 }
 
-                this.result.Text = string.Empty;
-                
+                this.result.Text = string.Empty;    // 아 포기 시발
+
                 if (currentState < 0)   // 음수 상태면 (-2 = 연산자 선택 상태: secondNum 입력 차례라는 뜻; -1 = 계산 완료 상태: 이전 결과가 firstNum이 됨)
-                    currentState *= -1; // 양수 상태로 전환: secondNum 입력 순서 (-2 -> 2로 전환) / (-1 -> 1로 전환)
-                                        // 2로 전환되어 OnCalculate -> DoCalculation 함수에서 쓰임
+                    currentState *= -1; // 양수 상태로 전환: secondNum 입력 순서 (-2 -> 2로 전환) / (-1 -> 1로 전환); 2로 전환되어 OnCalculate -> DoCalculation 함수에서 쓰임
             }
 
             // 버튼 입력값 누적
@@ -74,9 +64,7 @@ namespace SimpleCalculator
             this.CalcText.Text += btnPressed;
 
             double number;
-            if (double.TryParse(this.result.Text, out number))  // TryParse(): 문자열을 double 타입의 숫자로 변환
-                                                                // 성공 시 true, 실패 시 false
-                                                                // 변환이 성공하면 out 매개변수에 저장됨
+            if (double.TryParse(this.result.Text, out number))  // TryParse(): 문자열을 double 타입의 숫자로 변환; 성공 시 true, 실패 시 false; 변환이 성공하면 out 매개변수에 저장됨
             {
                 // 소숫점 포함 그대로를 표현: 정수부분+소수부분
                 // 숫자를 문자열로 변환
@@ -127,9 +115,7 @@ namespace SimpleCalculator
             this.result.Text = newResultText;
 
             double number;
-            if (double.TryParse(this.result.Text, out number))  // TryParse(): 문자열을 double 타입의 숫자로 변환
-                                                                // 성공 시 true, 실패 시 false
-                                                                // 변환이 성공하면 out 매개변수에 저장됨
+            if (double.TryParse(this.result.Text, out number))  // TryParse(): 문자열을 double 타입의 숫자로 변환; 성공 시 true, 실패 시 false; 변환이 성공하면 out 매개변수에 저장됨
             {
                 // result.Text 길이를 조건으로 걸고 그 길이만큼만 calctext, result에서 지울수 있게끔하면 되나?
                 if (currentState == 1)  // 양수 1 상태면 
@@ -153,10 +139,12 @@ namespace SimpleCalculator
                 this.result.Text = result.ToString();
                 this.CalcText.Text = $"({this.CalcText.Text})";   // 문자열 보간 사용
                 // this.CalcText.Text = "(" + this.CalcText.Text + ")";   // 문자열 연결; 이건 안되네
+                firstNum = result;
+
+                isFirstInput = false;
 
                 currentState = -1;  // -1: 계산 완료 상태
             }
         }
     }
 }
-
